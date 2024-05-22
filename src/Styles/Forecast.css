@@ -1,0 +1,51 @@
+.ForecastTop ul {
+    list-style-type: none;
+    display: flex;
+    gap: 10px;
+    padding-bottom: 15px;
+}
+
+.ForecastBottom {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+.Cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 10px;
+}
+
+.Cart h2 {
+    font-size: 20px;
+}
+
+.Cart h3 {
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.Cart img {
+    width: 100px;
+}
+
+.Cart div {
+    display: flex;
+    gap: 10px;
+}
+
+.low {
+    font-weight: 300;
+}
+
+.high {
+    font-size: 15px;
+}

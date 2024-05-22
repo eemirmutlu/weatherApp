@@ -1,0 +1,71 @@
+.Left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 40px;
+    padding-top: 20px;
+}
+
+.Country {
+    font-size: 10px;
+    padding-bottom: 10%;
+}
+
+.WeatherImg img {
+    height: 400px;
+}
+
+.Weather {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+    padding-bottom: 70px;
+}
+
+.Weather h1 {
+    font-weight: 300;
+    font-size: 150px;
+}
+
+.Weather p {
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.LeftBottom {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+    gap: 50px;
+}
+
+.LeftBottom div {
+    display: flex;
+}
+
+.BottomLeftImg,
+.BottomRightImg,
+.TopLeftImg,
+.TopRightImg {
+    background-color: rgb(248, 248, 250);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+}
+
+.Content {
+    display: grid !important;
+    padding-left: 20px;
+}
+
+.Content h2 {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.Content h1 {
+    font-size: 20px;
+    font-weight: bold;
+}

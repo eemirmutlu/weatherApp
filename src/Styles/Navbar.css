@@ -1,0 +1,35 @@
+.Navbar {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    padding-bottom: 20px;
+}
+
+.Search {
+    width: 100%;
+}
+
+.Search input {
+    width: 50%;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+}
+
+.Temperature {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: right;
+}
+
+.Temperature div img {
+    width: 30px;
+}
+
+.Celsius,
+.Fahrenheit {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
