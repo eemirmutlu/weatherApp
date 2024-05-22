@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Styles/Left.css'
 import { Icon } from '@iconify/react';
+import Axios from '../Library/Axios'
 
 const Left: React.FC = () => {
+    const [weather, setWeather] = useState<any>(null)
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition((success) => {
+            Axios.get('/jma', {
+                params: {
+                    lat: success,
+                    lon: success,
+                }
+            }).then(data => {
+                console.log(data)
+                setWeather(data.data)
+            })
+        });
+
+    }, [])
+
     return (
         <div className="Left">
             <div className='Country'>
@@ -17,7 +35,8 @@ const Left: React.FC = () => {
 
             <div className='Weather'>
                 <h1>
-                    13.7°
+                    {weather ? weather.current.temperature_2m : 'Loading...'}
+                    {weather.current_units.temperature_2m}
                 </h1>
                 <p>
                     Overcast
@@ -31,7 +50,10 @@ const Left: React.FC = () => {
                     </div>
                     <div className='Content'>
                         <h2>Feels Like</h2>
-                        <h1>13.8°C</h1>
+                        <h1>
+                            {weather ? weather.current.apparent_temperature : 'Loading...'}
+                            {weather.current_units.apparent_temperature}
+                        </h1>
                     </div>
                 </div>
                 <div className='TopRight'>
@@ -40,7 +62,10 @@ const Left: React.FC = () => {
                     </div>
                     <div className='Content'>
                         <h2>Wind Speed</h2>
-                        <h1>3.9km/h</h1>
+                        <h1>
+                            {weather ? weather.current.wind_speed_10m : 'Loading...'}
+                            {weather.current_units.wind_speed_10m}
+                        </h1>
                     </div>
                 </div>
                 <div className='BottomLeft'>
@@ -49,7 +74,9 @@ const Left: React.FC = () => {
                     </div>
                     <div className='Content'>
                         <h2>Visibility</h2>
-                        <h1>24.14km</h1>
+                        <h1>
+
+                        </h1>
                     </div>
                 </div>
                 <div className='BottomRight'>
@@ -58,7 +85,10 @@ const Left: React.FC = () => {
                     </div>
                     <div className='Content'>
                         <h2>Humidity</h2>
-                        <h1>90%</h1>
+                        <h1>
+                            {weather.current.relative_humidity_2m}
+                            {weather.current_units.relative_humidity_2m}
+                        </h1>
                     </div>
                 </div>
             </div>
