@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import '../Styles/Left.css'
 import { Icon } from '@iconify/react';
 import Axios from '../Library/Axios'
+import weatherDiscription from '../Library/weatherDiscription'
+
 
 const Left: React.FC = () => {
     const [weather, setWeather] = useState<any>(null)
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((success) => {
-            Axios.get('/jma', {
+            Axios.get('/forecast', {
                 params: {
                     lat: success,
                     lon: success,
@@ -21,6 +23,9 @@ const Left: React.FC = () => {
 
     }, [])
 
+
+    if (!weather) return 'Loading...'
+
     return (
         <div className="Left">
             <div className='Country'>
@@ -30,7 +35,7 @@ const Left: React.FC = () => {
             </div>
 
             <div className='WeatherImg'>
-                <img src="../src/Images/overcast-day.svg" alt="" />
+                <img src={`../src/Images/${weatherDiscription(weather.current.weather_code)?.icon}.svg`} alt="" />
             </div>
 
             <div className='Weather'>
@@ -38,8 +43,9 @@ const Left: React.FC = () => {
                     {weather ? weather.current.temperature_2m : 'Loading...'}
                     {weather.current_units.temperature_2m}
                 </h1>
+
                 <p>
-                    Overcast
+                    {weatherDiscription(weather.current.weather_code)?.description}
                 </p>
             </div>
 
@@ -75,7 +81,7 @@ const Left: React.FC = () => {
                     <div className='Content'>
                         <h2>Visibility</h2>
                         <h1>
-
+                            {weather.current.visibility/1000}km
                         </h1>
                     </div>
                 </div>

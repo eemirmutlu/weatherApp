@@ -4,9 +4,6 @@ import Left from './Components/Left'
 import Right from './Components/Right'
 
 function App() {
-
-
-
   return (
     <>
       <div className='Main'>
