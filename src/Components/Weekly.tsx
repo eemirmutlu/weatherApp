@@ -34,7 +34,7 @@ const Weekly: React.FC<any> = () => {
                         <h2>{dayjs(item).format('dddd')}</h2>
                         <h3>{item}</h3>
                         {/* <img src="../src/Images/${}-day.svg" alt="" /> */}
-                        <img src={`/public/Images/${weatherDiscription(weather.daily.weather_code[index])?.icon}.svg`} alt="" />
+                        <img src={`/Images/${weatherDiscription(weather.daily.weather_code[index])?.icon}.svg`} alt="" />
                         <div>
                             <h2 className="high">
                                 {weather.daily.temperature_2m_max[index]}

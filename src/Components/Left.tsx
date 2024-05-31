@@ -35,7 +35,7 @@ const Left: React.FC = () => {
             </div>
 
             <div className='WeatherImg'>
-                <img src={`../public/Images/${weatherDiscription(weather.current.weather_code)?.icon}.svg`} alt="" />
+                <img src={`/Images/${weatherDiscription(weather.current.weather_code)?.icon}.svg`} alt="" />
             </div>
 
             <div className='Weather'>
