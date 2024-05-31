@@ -90,7 +90,8 @@ const Details: React.FC = () => {
                     <div className="DetailCartContentLeft">
                         <img src="../src/Images/raindrop.svg" alt="" />
                         <p>
-                            {weather.daily.rain_sum[0] != null ? weather.daily.rain_sum[0] : '0%'}
+                            {weather.daily.precipitation_sum[0] != null ? weather.daily.rain_sum[0] : '0%'}
+                            {weather.daily_units.rain_sum}
                         </p>
                     </div>
                 </div>

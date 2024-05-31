@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import '../Styles/Forecast.css'
 import Navbar from '../Components/Navbar'
 import Axios from '../Library/Axios'
-import dayjs from "dayjs";
-import weatherDiscription from "../Library/weatherDiscription";
+import Weekly from "../Components/Weekly";
+import Hourly from "../Components/Hourly";
 
-const Forecast: React.FC = () => {
+const Forecast: React.FC<any> = () => {
 
     const [weather, setWeather] = useState<any>(null)
+    const [forecastType, setForecastType] = useState<string>('weekly');
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((success) => {
@@ -30,31 +31,22 @@ const Forecast: React.FC = () => {
             <Navbar />
             <div className="ForecastTop">
                 <ul>
-                    <li><b>Weekly Forecast</b></li>
-                    <li>Hourly Forecast</li>
+                    <li
+                        onClick={() => setForecastType('weekly')}
+                        style={{ fontWeight: forecastType === 'weekly' ? 'bold' : 'normal' }}
+                    >
+                        Weekly Forecast
+                    </li>
+                    <li
+                        onClick={() => setForecastType('hourly')}
+                        style={{ fontWeight: forecastType === 'hourly' ? 'bold' : 'normal' }}
+                    >
+                        Hourly Forecast
+                    </li>
                 </ul>
             </div>
-            <div className="ForecastBottom">
-                {weather.daily.time?.map((item, index) => (
-                    <div className="Cart">
-                        <h2>{dayjs(item).format('dddd')}</h2>
-                        <h3>
-                            {item}
-                        </h3>
-                        {/* <img src="../src/Images/${}-day.svg" alt="" /> */}
-                        <img src={`../src/Images/${weatherDiscription(weather.daily.weather_code[index])?.icon}.svg`} alt="" />
-                        <div>
-                            <h2 className="high">
-                                {weather.daily.temperature_2m_max[index]}
-                                {weather.daily_units.temperature_2m_max}
-                            </h2>
-                            <h2 className="low">
-                                {weather.daily.temperature_2m_min[index]}
-                                {weather.daily_units.temperature_2m_min}
-                            </h2>
-                        </div>
-                    </div>
-                ))}
+            <div>
+                {forecastType === 'weekly' ? <Weekly /> : <Hourly />}
             </div>
         </div>
     )
