@@ -37,7 +37,7 @@ const Hourly: React.FC = () => {
                     <div className="HourlyCart" key={index}>
                         <h3>{dayjs(item).format('hh:mm A')}</h3>
                         <img
-                            src={`../src/Images/${weatherDiscription(weather.hourly.weather_code[index])?.icon}.svg`}
+                            src={`../public/Images/${weatherDiscription(weather.hourly.weather_code[index])?.icon}.svg`}
                             alt=""
                         />
                         <div>

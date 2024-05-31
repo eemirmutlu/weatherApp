@@ -37,7 +37,7 @@ const Details: React.FC = () => {
                 <div className="DetailCart">
                     <h5>Sunrise</h5>
                     <div className="DetailCartContent">
-                        <img src="../src/Images/sunrise.svg" alt="" />
+                        <img src="../public/Images/sunrise.svg" alt="" />
                         <p>
                             {dayjs(weather.daily.sunrise[0]).format('HH:HH')}
 
@@ -47,7 +47,7 @@ const Details: React.FC = () => {
                 <div className="DetailCart">
                     <h5>Sunset</h5>
                     <div className="DetailCartContent">
-                        <img src="../src/Images/sunset.svg" alt="" />
+                        <img src="../public/Images/sunset.svg" alt="" />
                         <p>
                             {dayjs(weather.daily.sunset[0]).format('HH:HH')}
                         </p>
@@ -57,7 +57,7 @@ const Details: React.FC = () => {
                     <h5>Highest Tepmerature</h5>
                     <div className="DetailCartContent">
                         <div className="HighTemp">
-                            <img src="../src/Images/thermometer-warmer.svg" alt="" />
+                            <img src="../public/Images/thermometer-warmer.svg" alt="" />
                             <p>
                                 {weather.daily.apparent_temperature_max[0]}
                                 {weather.daily_units.apparent_temperature_max}
@@ -73,7 +73,7 @@ const Details: React.FC = () => {
                     <h5>Lowest Temperature</h5>
                     <div className="DetailCartContent">
                         <div className="LowTemp">
-                            <img src="../src/Images/thermometer-colder.svg" alt="" />
+                            <img src="../public/Images/thermometer-colder.svg" alt="" />
                             <p>
                                 {weather.daily.apparent_temperature_min[0]}
                                 {weather.daily_units.apparent_temperature_min}
@@ -88,7 +88,7 @@ const Details: React.FC = () => {
                 <div className="DetailCart">
                     <h5>Preciptional Probablility</h5>
                     <div className="DetailCartContentLeft">
-                        <img src="../src/Images/raindrop.svg" alt="" />
+                        <img src="../public/Images/raindrop.svg" alt="" />
                         <p>
                             {weather.daily.precipitation_sum[0] != null ? weather.daily.rain_sum[0] : '0%'}
                             {weather.daily_units.rain_sum}
@@ -98,7 +98,7 @@ const Details: React.FC = () => {
                 <div className="DetailCart">
                     <h5>Total Precipitation</h5>
                     <div className="DetailCartContentLeft">
-                        <img src="../src/Images/raindrops.svg" alt="" />
+                        <img src="../public/Images/raindrops.svg" alt="" />
                         <p>
                             {weather.daily.precipitation_sum[0]}
                             {weather.daily_units.precipitation_sum}
@@ -108,7 +108,7 @@ const Details: React.FC = () => {
                 <div className="DetailCart">
                     <h5>UV Index</h5>
                     <div className="DetailCartContent">
-                        <img src={`../src/Images/${uvIndex(weather.daily.sunshine_duration)?.icon}.svg`} alt="" />
+                        <img src={`../public/Images/${uvIndex(weather.daily.sunshine_duration)?.icon}.svg`} alt="" />
                         <p>
                             {uvIndex(weather.daily.sunshine_duration).description}
                         </p>
@@ -117,7 +117,7 @@ const Details: React.FC = () => {
                 <div className="DetailCart">
                     <h5>Wind Speed</h5>
                     <div className="DetailCartContent">
-                        <img src={`../src/Images/${wind(weather.current.wind_gusts_10m)?.icon}.svg`} alt="" />
+                        <img src={`../public/Images/${wind(weather.current.wind_gusts_10m)?.icon}.svg`} alt="" />
                         <h2>
                             {weather.current.wind_speed_10m}
                             {weather.current_units.wind_speed_10m}
