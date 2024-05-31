@@ -33,7 +33,7 @@ const Hourly: React.FC = () => {
     return (
         <div className="HourlyForecast">
             {weather && weather.hourly && weather.hourly.time ? (
-                weather.hourly.time.filter((time, index) => isToday(time)).map((item, index) => (
+                weather.hourly.time.filter((time:number) => isToday(time)).map((item:string, index:number) => (
                     <div className="HourlyCart" key={index}>
                         <h3>{dayjs(item).format('hh:mm A')}</h3>
                         <img

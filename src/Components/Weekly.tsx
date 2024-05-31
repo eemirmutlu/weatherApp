@@ -2,7 +2,8 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import Axios from "../Library/Axios";
 import weatherDiscription from "../Library/weatherDiscription";
-import '../Styles/Weekly.css'
+import '../Styles/Weekly.css';
+
 
 const Weekly: React.FC<any> = () => {
 
@@ -28,7 +29,7 @@ const Weekly: React.FC<any> = () => {
     return (
         <div className="ForecastBottom">
             {weather && weather.daily && weather.daily.time ? (
-                weather.daily.time.map((item, index) => (
+                weather.daily.time.map((item:string, index:number) => (
                     <div className="Cart" key={index}>
                         <h2>{dayjs(item).format('dddd')}</h2>
                         <h3>{item}</h3>
