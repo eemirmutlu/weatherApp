@@ -2,10 +2,13 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import Axios from "../Library/Axios";
 import weatherDiscription from "../Library/weatherDiscription";
-import '../Styles/Hourly.css'
+import Skeleton from "./Skeleton";
+import '../Styles/Hourly.css';
+import { InfinitySpin } from "react-loader-spinner";
 
 const Hourly: React.FC = () => {
     const [weather, setWeather] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean[]>([]);
     const today = dayjs().startOf('day');
 
     const isToday = (timestamp: string | number | dayjs.Dayjs | Date | null | undefined) => {
@@ -22,6 +25,8 @@ const Hourly: React.FC = () => {
                 }
             }).then(response => {
                 setWeather(response.data);
+                // Initialize loading state array with true for each hourly entry
+                setLoading(new Array(response.data.hourly.time.length).fill(true));
             }).catch(error => {
                 console.error("Error fetching weather data:", error);
             });
@@ -30,17 +35,36 @@ const Hourly: React.FC = () => {
         });
     }, []);
 
+    const handleImageLoad = (index: number) => {
+        setLoading(prevState => {
+            const newLoadingState = [...prevState];
+            newLoadingState[index] = false;
+            return newLoadingState;
+        });
+    };
+
     return (
         <div className="HourlyForecast">
             {weather && weather.hourly && weather.hourly.time ? (
-                weather.hourly.time.filter((time:number) => isToday(time)).map((item:string, index:number) => (
+                weather.hourly.time.filter((time: number) => isToday(time)).map((item: string, index: number) => (
                     <div className="HourlyCart" key={index}>
                         <h3>{dayjs(item).format('hh:mm A')}</h3>
+                        {loading[index] && (
+                            <InfinitySpin
+                                width="200"
+                                color="gray"
+                            />
+                        )}
                         <img
                             src={`/Images/${weatherDiscription(weather.hourly.weather_code[index])?.icon}.svg`}
                             alt=""
+                            onLoad={() => handleImageLoad(index)}
+                            style={{ display: loading[index] ? 'none' : 'block' }}
                         />
                         <div>
+                            <h2>
+                                {weatherDiscription(weather.current.weather_code)?.description}
+                            </h2>
                             <h2 className="high">
                                 {weather.hourly.temperature_2m[index]}
                                 {weather.hourly_units.temperature_2m}
@@ -49,7 +73,11 @@ const Hourly: React.FC = () => {
                     </div>
                 ))
             ) : (
-                <p>Loading...</p>
+                <div className="loader-container">
+                    {[...Array(24)].map((_, index) => (
+                        <Skeleton key={index} />
+                    ))}
+                </div>
             )}
         </div>
     );

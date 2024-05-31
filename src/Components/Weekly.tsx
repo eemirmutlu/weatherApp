@@ -31,9 +31,8 @@ const Weekly: React.FC<any> = () => {
             {weather && weather.daily && weather.daily.time ? (
                 weather.daily.time.map((item:string, index:number) => (
                     <div className="Cart" key={index}>
-                        <h2>{dayjs(item).format('dddd')}</h2>
+                        <h2>{index === 0 ? 'Today': dayjs(item).format('dddd')}</h2>
                         <h3>{item}</h3>
-                        {/* <img src="../src/Images/${}-day.svg" alt="" /> */}
                         <img src={`/Images/${weatherDiscription(weather.daily.weather_code[index])?.icon}.svg`} alt="" />
                         <div>
                             <h2 className="high">
