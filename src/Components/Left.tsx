@@ -1,52 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import '../Styles/Left.css'
+import '../Styles/Left.css';
 import { Icon } from '@iconify/react';
-import Axios from '../Library/Axios'
-import weatherDiscription from '../Library/weatherDiscription'
-
+import Axios from '../Library/Axios';
+import weatherDiscription from '../Library/weatherDiscription';
+import LeftSkeleton from './LeftSkeleton';
+import { InfinitySpin } from 'react-loader-spinner';
 
 const Left: React.FC = () => {
-    const [weather, setWeather] = useState<any>(null)
+    const [weather, setWeather] = useState<any>(null);
+    const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((success) => {
             Axios.get('/forecast', {
                 params: {
-                    lat: success,
-                    lon: success,
+                    lat: success.coords.latitude,
+                    lon: success.coords.longitude,
                 }
             }).then(data => {
-                console.log(data)
-                setWeather(data.data)
-            })
+                setWeather(data.data);
+            }).catch(error => {
+                console.error("Error fetching weather data:", error);
+            });
+        }, error => {
+            console.error("Error getting geolocation:", error);
         });
+    }, []);
 
-    }, [])
-
-
-    if (!weather) return 'Loading...'
+    if (!weather) return <LeftSkeleton />;
 
     return (
         <div className="Left">
             <div className='Country'>
-                <h1>
-                    Tokyo, Japan
-                </h1>
+                <h1>Tokyo, Japan</h1>
             </div>
 
             <div className='WeatherImg'>
-                <img src={`/Images/${weatherDiscription(weather.current.weather_code)?.icon}.svg`} alt="" />
+                {!imageLoaded && <InfinitySpin width="200" color="gray" />}
+                <img
+                    src={`/Images/${weatherDiscription(weather.current.weather_code)?.icon}.svg`}
+                    alt=""
+                    onLoad={() => setImageLoaded(true)}
+                    style={{ display: imageLoaded ? 'block' : 'none' }}
+                />
             </div>
 
             <div className='Weather'>
                 <h1>
-                    {weather ? weather.current.temperature_2m : 'Loading...'}
+                    {weather.current.temperature_2m}
                     {weather.current_units.temperature_2m}
                 </h1>
-
-                <p>
-                    {weatherDiscription(weather.current.weather_code)?.description}
-                </p>
+                <p>{weatherDiscription(weather.current.weather_code)?.description}</p>
             </div>
 
             <div className='LeftBottom'>
@@ -57,7 +61,7 @@ const Left: React.FC = () => {
                     <div className='Content'>
                         <h2>Feels Like</h2>
                         <h1>
-                            {weather ? weather.current.apparent_temperature : 'Loading...'}
+                            {weather.current.apparent_temperature}
                             {weather.current_units.apparent_temperature}
                         </h1>
                     </div>
@@ -69,7 +73,7 @@ const Left: React.FC = () => {
                     <div className='Content'>
                         <h2>Wind Speed</h2>
                         <h1>
-                            {weather ? weather.current.wind_speed_10m : 'Loading...'}
+                            {weather.current.wind_speed_10m}
                             {weather.current_units.wind_speed_10m}
                         </h1>
                     </div>
@@ -80,9 +84,7 @@ const Left: React.FC = () => {
                     </div>
                     <div className='Content'>
                         <h2>Visibility</h2>
-                        <h1>
-                            {weather.current.visibility/1000}km
-                        </h1>
+                        <h1>{weather.current.visibility / 1000}km</h1>
                     </div>
                 </div>
                 <div className='BottomRight'>

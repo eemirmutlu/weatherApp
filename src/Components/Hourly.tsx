@@ -25,7 +25,6 @@ const Hourly: React.FC = () => {
                 }
             }).then(response => {
                 setWeather(response.data);
-                // Initialize loading state array with true for each hourly entry
                 setLoading(new Array(response.data.hourly.time.length).fill(true));
             }).catch(error => {
                 console.error("Error fetching weather data:", error);
