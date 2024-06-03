@@ -81,4 +81,9 @@
         display: grid;
         grid-template-columns: 6fr 6fr;
     }
+
+    .Weather h1 {
+        font-weight: 300;
+        font-size: 100px;
+    }
 }
