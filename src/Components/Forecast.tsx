@@ -4,6 +4,7 @@ import Navbar from '../Components/Navbar'
 import Axios from '../Library/Axios'
 import Weekly from "../Components/Weekly";
 import Hourly from "../Components/Hourly";
+import WeeklySkeleton from "./WeeklySkeleton";
 
 const Forecast: React.FC<any> = () => {
 
@@ -24,7 +25,7 @@ const Forecast: React.FC<any> = () => {
 
     }, [])
 
-    if (!weather) return 'Loading...'
+    if (!weather) return <WeeklySkeleton/>
 
     return (
         <div className="Forecast">
