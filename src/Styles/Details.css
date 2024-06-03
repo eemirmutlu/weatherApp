@@ -37,7 +37,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* width: 100%; */
     font-weight: 500;
     font-size: 30px;
 }
@@ -51,4 +50,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media screen and (max-width: 500px) {
+    .Details {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

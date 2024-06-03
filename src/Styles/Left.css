@@ -69,3 +69,16 @@
     font-size: 20px;
     font-weight: bold;
 }
+
+@media screen and (max-width: 1050px) {
+    .LeftBottom {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .LeftBottom {
+        display: grid;
+        grid-template-columns: 6fr 6fr;
+    }
+}

@@ -8,3 +8,11 @@
     display: grid;
     grid-template-columns: 3fr 9fr;
 }
+
+@media screen and (max-width: 1050px) {
+    .Main {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+}
