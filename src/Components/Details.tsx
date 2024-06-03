@@ -33,7 +33,7 @@ const Details: React.FC = () => {
                     <Skeleton width={200} height={30} />
                 </h4>
                 <div className="Details">
-                    {Array(8).fill().map((_, index) => (
+                    {Array(8).fill(undefined).map((_, index) => (
                         <div className="DetailCart" key={index}>
                             <h5><Skeleton width={150} /></h5>
                             <div className="DetailCartContent">
