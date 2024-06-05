@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import '../Styles/Forecast.css';
 import Navbar from '../Components/Navbar';
-import axios from 'axios'; // Import Axios from axios library
 import Weekly from "../Components/Weekly";
 import Hourly from "../Components/Hourly";
 import WeeklySkeleton from "./WeeklySkeleton";
+import fetchWeatherData from "../Library/Axios";
 
 const Forecast: React.FC<any> = () => {
     const [weather, setWeather] = useState<any>(null);
@@ -12,20 +12,18 @@ const Forecast: React.FC<any> = () => {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((success) => {
-            axios.get('/forecast', {
-                params: {
-                    lat: success.coords.latitude,
-                    lon: success.coords.longitude,
-                }
-            }).then((response) => {
-                setWeather(response.data);
-            }).catch((error) => {
-                console.error("Error fetching weather data:", error);
-            });
+            fetchWeatherData(success.coords.latitude, success.coords.longitude)
+                .then((response: any) => {
+                    setWeather(response.data);
+                })
+                .catch((error: any) => {
+                    console.error("Error fetching weather data:", error);
+                });
         }, (error) => {
             console.error("Error getting geolocation:", error);
         });
     }, []);
+
 
     if (!weather) return <WeeklySkeleton />;
 
