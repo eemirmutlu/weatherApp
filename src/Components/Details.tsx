@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import '../Styles/Details.css';
-import Axios from '../Library/Axios';
+// import Axios from '../Library/Axios';
 import uvIndex from '../Library/uvIndex';
 import wind from '../Library/wind';
 import windDirection from "../Library/windDirection";
@@ -8,21 +8,23 @@ import windSpeed from "../Library/windSpeed";
 import dayjs from "dayjs";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import fetchWeatherData from "../Library/Axios";
 
 const Details: React.FC = () => {
 
     const [weather, setWeather] = useState<any>(null);
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            Axios.get('/forecast', {
-                params: {
-                    lat: position.coords.latitude,
-                    lon: position.coords.longitude,
-                }
-            }).then((data: { data: any; }) => {
-                setWeather(data.data);
-            });
+        navigator.geolocation.getCurrentPosition((success) => {
+            fetchWeatherData(success.coords.latitude, success.coords.longitude)
+                .then((response: any) => {
+                    setWeather(response.data);
+                })
+                .catch((error: any) => {
+                    console.error("Error fetching weather data:", error);
+                });
+        }, (error) => {
+            console.error("Error getting geolocation:", error);
         });
     }, []);
 

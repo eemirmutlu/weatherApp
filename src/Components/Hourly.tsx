@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import Axios from "../Library/Axios";
+import fetchWeatherData from "../Library/Axios";
 import weatherDiscription from "../Library/weatherDiscription";
 import Skeleton from "./Skeleton";
 import '../Styles/Hourly.css';
@@ -18,17 +18,14 @@ const Hourly: React.FC = () => {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((success) => {
-            Axios.get('/forecast', {
-                params: {
-                    lat: success.coords.latitude,
-                    lon: success.coords.longitude,
-                }
-            }).then(response => {
-                setWeather(response.data);
-                setLoading(new Array(response.data.hourly.time.length).fill(true));
-            }).catch(error => {
-                console.error("Error fetching weather data:", error);
-            });
+            fetchWeatherData(success.coords.latitude, success.coords.longitude)
+                .then(response => {
+                    setWeather(response.data);
+                    setLoading(new Array(response.data.hourly.time.length).fill(true));
+                })
+                .catch(error => {
+                    console.error("Error fetching weather data:", error);
+                });
         }, error => {
             console.error("Error getting geolocation:", error);
         });
@@ -62,7 +59,7 @@ const Hourly: React.FC = () => {
                         />
                         <div>
                             <h2>
-                                {weatherDiscription(weather.current.weather_code)?.description}
+                                {weatherDiscription(weather.hourly.weather_code[index])?.description}
                             </h2>
                             <h2 className="high">
                                 {weather.hourly.temperature_2m[index]}

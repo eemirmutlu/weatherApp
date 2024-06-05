@@ -1,33 +1,40 @@
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import Axios from "../Library/Axios";
+import fetchWeatherData from "../Library/Axios";
 import weatherDiscription from "../Library/weatherDiscription";
 import '../Styles/Weekly.css';
 import { InfinitySpin } from "react-loader-spinner";
 import WeeklySkeleton from "./WeeklySkeleton";
 
-const Weekly: React.FC<any> = () => {
-
+const Weekly: React.FC = () => {
     const [weather, setWeather] = useState<any>(null);
     const [loading, setLoading] = useState<boolean[]>([]);
+    const [location, setLocation] = useState<{ lat: number, lon: number } | null>(null);
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((success) => {
-            Axios.get('/forecast', {
-                params: {
-                    lat: success.coords.latitude,
-                    lon: success.coords.longitude,
-                }
-            }).then(response => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setLocation({
+                    lat: position.coords.latitude,
+                    lon: position.coords.longitude
+                });
+            },
+            (error) => {
+                console.error("Error getting geolocation:", error);
+            }
+        );
+    }, []);
+
+    useEffect(() => {
+        if (location) {
+            fetchWeatherData(location.lat, location.lon).then(response => {
                 setWeather(response.data);
                 setLoading(new Array(response.data.daily.time.length).fill(true));
             }).catch(error => {
                 console.error("Error fetching weather data:", error);
             });
-        }, error => {
-            console.error("Error getting geolocation:", error);
-        });
-    }, []);
+        }
+    }, [location]);
 
     const handleImageLoad = (index: number) => {
         setLoading(prevState => {
@@ -77,6 +84,6 @@ const Weekly: React.FC<any> = () => {
             )}
         </div>
     );
-}
+};
 
 export default Weekly;

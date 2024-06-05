@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/Left.css';
 import { Icon } from '@iconify/react';
-import Axios from '../Library/Axios';
+import fetchWeatherData from '../Library/Axios';
 import weatherDiscription from '../Library/weatherDiscription';
 import LeftSkeleton from './LeftSkeleton';
 import { InfinitySpin } from 'react-loader-spinner';
@@ -9,30 +9,50 @@ import { InfinitySpin } from 'react-loader-spinner';
 const Left: React.FC = () => {
     const [weather, setWeather] = useState<any>(null);
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+    const [location, setLocation] = useState<{ lat: number, lon: number } | null>(null);
+    const [locationName, setLocationName] = useState<string>('');
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((success) => {
-            Axios.get('/forecast', {
-                params: {
-                    lat: success.coords.latitude,
-                    lon: success.coords.longitude,
-                }
-            }).then(data => {
-                setWeather(data.data);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setLocation({
+                    lat: position.coords.latitude,
+                    lon: position.coords.longitude
+                });
+            },
+            (error) => {
+                console.error("Error getting geolocation:", error);
+            }
+        );
+    }, []);
+
+    useEffect(() => {
+        if (location) {
+            fetchWeatherData(location.lat, location.lon).then(response => {
+                setWeather(response.data);
+                // Şehir ve ülke bilgisini almak için reverse geocoding yapabiliriz
+                fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${location.lat}&lon=${location.lon}&limit=1&appid=68884446b8d4fe1c972ca536c586679e`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data[0]) {
+                            setLocationName(`${data[0].name}, ${data[0].country}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching location name:", error);
+                    });
             }).catch(error => {
                 console.error("Error fetching weather data:", error);
             });
-        }, error => {
-            console.error("Error getting geolocation:", error);
-        });
-    }, []);
+        }
+    }, [location]);
 
     if (!weather) return <LeftSkeleton />;
 
     return (
         <div className="Left">
             <div className='Country'>
-                <h1>Tokyo, Japan</h1>
+                <h1>{locationName}</h1>
             </div>
 
             <div className='WeatherImg'>
