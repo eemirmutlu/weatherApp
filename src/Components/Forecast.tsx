@@ -12,7 +12,7 @@ const Forecast: React.FC<any> = () => {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((success) => {
-            axios.get('/forecast', {
+            axios.get('https://api.open-meteo.com/v1/forecast', {
                 params: {
                     lat: success.coords.latitude,
                     lon: success.coords.longitude,
