@@ -5,6 +5,7 @@ import fetchWeatherData from '../Library/Axios';
 import weatherDiscription from '../Library/weatherDiscription';
 import LeftSkeleton from './LeftSkeleton';
 import { InfinitySpin } from 'react-loader-spinner';
+import axios from 'axios';
 
 const Left: React.FC = () => {
     const [weather, setWeather] = useState<any>(null);
@@ -30,17 +31,22 @@ const Left: React.FC = () => {
         if (location) {
             fetchWeatherData(location.lat, location.lon).then(response => {
                 setWeather(response.data);
-                // Şehir ve ülke bilgisini almak için reverse geocoding yapabiliriz
-                fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${location.lat}&lon=${location.lon}&limit=1&appid=68884446b8d4fe1c972ca536c586679e`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data && data[0]) {
-                            setLocationName(`${data[0].name}, ${data[0].country}`);
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error fetching location name:", error);
-                    });
+                axios.get(`https://api.openweathermap.org/geo/1.0/reverse`, {
+                    params: {
+                        lat: location.lat,
+                        lon: location.lon,
+                        appid: '68884446b8d4fe1c972ca536c586679e'
+                    }
+                })
+                .then(res => {
+                    const data = res.data;
+                    if (data && data[0]) {
+                        setLocationName(`${data[0].name}, ${data[0].country}`);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching location name:", error);
+                });
             }).catch(error => {
                 console.error("Error fetching weather data:", error);
             });

@@ -1,66 +1,60 @@
-const uvIndex = (sunCode: number) => {
-    switch (sunCode) {
-        case 1:
-            return {
-                description: "No protedction required.",
-                icon: "uv-index-1",
-            }
-        case 2:
-            return {
-                description: "No protedction required.",
-                icon: "uv-index-2",
-            }
-        case 3:
-            return {
-                description: "No protedction required.",
-                icon: "uv-index-3",
-            }
-        case 4:
-            return {
-                description: "No protedction required.",
-                icon: "uv-index-4",
-            }
-        case 5:
-            return {
-                description: "No protedction required.",
-                icon: "uv-index-5"
-            }
-        case 6:
-            return {
-                description: "Protedction required.",
-                icon: "uv-index-6",
-            }
-        case 7:
-            return {
-                description: "Protedction required.",
-                icon: "uv-index-7",
-            }
-        case 8:
-            return {
-                description: "Protedction required.",
-                icon: "uv-index-8",
-            }
-        case 9:
-            return {
-                description: "Protedction required.",
-                icon: "uv-index-9",
-            }
-        case 10:
-            return {
-                description: "Protedction required.",
-                icon: "uv-index-10"
-            }
-        case 11:
-            return {
-                description: 'Protedction required.',
-                icon: 'uv-index-11',
-            }
-        default:
-            return {
-                description: 'No protedction required.',
-                icon: 'uv-index',
-            }
+const uvIndex = (sunExposureSeconds: number) => {
+    if (sunExposureSeconds < 3600) {
+        return {
+            description: "No protection required.",
+            icon: "uv-index-1"
+        };
+    } else if (sunExposureSeconds >= 3600 && sunExposureSeconds < 7200) {
+        return {
+            description: "No protection required.",
+            icon: "uv-index-2"
+        };
+    } else if (sunExposureSeconds >= 7200 && sunExposureSeconds < 10800) {
+        return {
+            description: "No protection required.",
+            icon: "uv-index-3"
+        };
+    } else if (sunExposureSeconds >= 10800 && sunExposureSeconds < 14400) {
+        return {
+            description: "No protection required.",
+            icon: "uv-index-4"
+        };
+    } else if (sunExposureSeconds >= 14400 && sunExposureSeconds < 18000) {
+        return {
+            description: "No protection required.",
+            icon: "uv-index-5"
+        };
+    } else if (sunExposureSeconds >= 18000 && sunExposureSeconds < 21600) {
+        return {
+            description: "Protection required.",
+            icon: "uv-index-6"
+        };
+    } else if (sunExposureSeconds >= 21600 && sunExposureSeconds < 25200) {
+        return {
+            description: "Protection required.",
+            icon: "uv-index-7"
+        };
+    } else if (sunExposureSeconds >= 25200 && sunExposureSeconds < 28800) {
+        return {
+            description: "Protection required.",
+            icon: "uv-index-8"
+        };
+    } else if (sunExposureSeconds >= 28800 && sunExposureSeconds < 32400) {
+        return {
+            description: "Protection required.",
+            icon: "uv-index-9"
+        };
+    } else if (sunExposureSeconds >= 32400 && sunExposureSeconds < 36000) {
+        return {
+            description: "Protection required.",
+            icon: "uv-index-10"
+        };
+    } else {
+        return {
+            description: "Protection required.",
+            icon: "uv-index-11"
+        };
     }
-}
+};
 
-export default uvIndex
+export default uvIndex;

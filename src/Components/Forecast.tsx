@@ -11,17 +11,20 @@ const Forecast: React.FC<any> = () => {
     const [forecastType, setForecastType] = useState<string>('weekly');
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((success) => {
-            fetchWeatherData(success.coords.latitude, success.coords.longitude)
-                .then((response: any) => {
-                    setWeather(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Error fetching weather data:", error);
-                });
-        }, (error) => {
-            console.error("Error getting geolocation:", error);
-        });
+        navigator.geolocation.getCurrentPosition(
+            (success) => {
+                fetchWeatherData(success.coords.latitude, success.coords.longitude)
+                    .then((response) => {
+                        setWeather(response.data);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching weather data:", error);
+                    });
+            },
+            (error) => {
+                console.error("Error getting geolocation:", error);
+            }
+        );
     }, []);
 
 

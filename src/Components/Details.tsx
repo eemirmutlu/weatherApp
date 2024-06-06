@@ -19,6 +19,7 @@ const Details: React.FC = () => {
             fetchWeatherData(success.coords.latitude, success.coords.longitude)
                 .then((response: any) => {
                     setWeather(response.data);
+                    console.log(response.data)
                 })
                 .catch((error: any) => {
                     console.error("Error fetching weather data:", error);
