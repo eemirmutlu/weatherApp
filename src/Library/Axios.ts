@@ -4,7 +4,7 @@ const instance = axios.create({
   baseURL: 'https://api.open-meteo.com/v1'
 });
 
-const fetchWeatherData = (lat: any, lon: any) => {
+const fetchWeatherData = () => {
   return instance.get('/forecast', {
     params: {
       latitude: 40.1950,
