@@ -13,7 +13,7 @@ const Forecast: React.FC<any> = () => {
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
             (success) => {
-                fetchWeatherData(success.coords.latitude, success.coords.longitude)
+                fetchWeatherData()
                     .then((response) => {
                         setWeather(response.data);
                     })
