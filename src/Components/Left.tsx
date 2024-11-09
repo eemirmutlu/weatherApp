@@ -10,48 +10,34 @@ import axios from 'axios';
 const Left: React.FC = () => {
     const [weather, setWeather] = useState<any>(null);
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-    const [location, setLocation] = useState<{ lat: number, lon: number } | null>(null);
     const [locationName, setLocationName] = useState<string>('');
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                setLocation({
-                    lat: position.coords.latitude,
-                    lon: position.coords.longitude
-                });
-            },
-            (error) => {
-                console.error("Error getting geolocation:", error);
-            }
-        );
-    }, []);
+    // Bursa'nın koordinatları
+    const location = { lat: 40.1950, lon: 29.0601 };
 
     useEffect(() => {
-        if (location) {
-            fetchWeatherData(location.lat, location.lon).then(response => {
-                setWeather(response.data);
-                axios.get(`https://api.openweathermap.org/geo/1.0/reverse`, {
-                    params: {
-                        lat: location.lat,
-                        lon: location.lon,
-                        appid: '68884446b8d4fe1c972ca536c586679e'
-                    }
-                })
-                .then(res => {
-                    const data = res.data;
-                    if (data && data[0]) {
-                        setLocationName(`${data[0].name}, ${data[0].country}`);
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching location name:", error);
-                });
-            }).catch(error => {
-                console.error("Error fetching weather data:", error);
+        fetchWeatherData(location.lat, location.lon).then(response => {
+            setWeather(response.data);
+            axios.get(`https://api.openweathermap.org/geo/1.0/reverse`, {
+                params: {
+                    lat: location.lat,
+                    lon: location.lon,
+                    appid: '68884446b8d4fe1c972ca536c586679e'
+                }
+            })
+            .then(res => {
+                const data = res.data;
+                if (data && data[0]) {
+                    setLocationName(`${data[0].name}, ${data[0].country}`);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching location name:", error);
             });
-        }
-    }, [location]);
+        }).catch(error => {
+            console.error("Error fetching weather data:", error);
+        });
+    }, []);
 
     if (!weather) return <LeftSkeleton />;
 
