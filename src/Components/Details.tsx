@@ -15,18 +15,19 @@ const Details: React.FC = () => {
     const [weather, setWeather] = useState<any>(null);
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((success) => {
-            fetchWeatherData(success.coords.latitude, success.coords.longitude)
-                .then((response: any) => {
-                    setWeather(response.data);
-                    console.log(response.data)
-                })
-                .catch((error: any) => {
-                    console.error("Error fetching weather data:", error);
-                });
-        }, (error) => {
-            console.error("Error getting geolocation:", error);
-        });
+        // Bursa'nın koordinatları
+        const bursaLat = 40.1950;
+        const bursaLon = 29.0610;
+
+        // Hava durumu verisini Bursa'nın koordinatlarıyla çek
+        fetchWeatherData(bursaLat, bursaLon)
+            .then((response: any) => {
+                setWeather(response.data);
+                console.log(response.data)
+            })
+            .catch((error: any) => {
+                console.error("Error fetching weather data:", error);
+            });
     }, []);
 
     if (!weather) {
