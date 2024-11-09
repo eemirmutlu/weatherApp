@@ -18,7 +18,7 @@ const Hourly: React.FC = () => {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((success) => {
-            fetchWeatherData(success.coords.latitude, success.coords.longitude)
+            fetchWeatherData()
                 .then(response => {
                     setWeather(response.data);
                     setLoading(new Array(response.data.hourly.time.length).fill(true));
