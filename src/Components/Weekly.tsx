@@ -15,8 +15,8 @@ const Weekly: React.FC = () => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 setLocation({
-                    lat: position.coords.latitude,
-                    lon: position.coords.longitude
+                    lat: 40.1950,
+                    lon: 29.0610,
                 });
             },
             (error) => {
